@@ -393,7 +393,7 @@ const PrivacyPolicy = () => {
               </h2>
               <p className="mb-4">Informações de contato da HIBRID IA:</p>
               <ul className="space-y-2 text-brand-cyan font-medium">
-                <li>E-mail: suporthibrid@gmail.com</li>
+                <li>E-mail: suporthibrid@gmail.com | contato@inteligenciahibrid.online</li>
                 <li>Telefone: +55 (45) 99859-2085 / +55 (45) 99902-2803</li>
                 <li>CNPJ: 66.153.809/0001-61</li>
                 <li>Endereço: R MACAPA 922, LANCASTER, FOZ DO IGUAÇU, PR 85.861-438, Brasil</li>
