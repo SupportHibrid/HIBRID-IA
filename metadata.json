@@ -1,0 +1,6 @@
+{
+  "name": "HIBRID Soluções em IA",
+  "description": "Website institucional premium da HIBRID Soluções em IA - Inteligência Artificial, Automação e Crescimento Previsível para Clínicas e Farmácias. Inclui simuladores de ROI e Gerador de Diagnóstico por IA.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
