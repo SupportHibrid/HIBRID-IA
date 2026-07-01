@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HIBRID | Conectar WhatsApp</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fa;
+      color: #1f2937;
+      margin: 0;
+      padding: 40px;
+    }
+
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 36px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+    }
+
+    h1 {
+      color: #0057d9;
+      margin-bottom: 12px;
+    }
+
+    p {
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    button {
+      background: #0057d9;
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      padding: 15px 24px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background: #003e99;
+    }
+
+    pre {
+      background: #111827;
+      color: #d1fae5;
+      padding: 18px;
+      border-radius: 12px;
+      overflow-x: auto;
+      margin-top: 24px;
+      min-height: 120px;
+      white-space: pre-wrap;
+    }
+
+    .alerta {
+      background: #eaf2ff;
+      border-left: 4px solid #0057d9;
+      padding: 14px;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Conectar WhatsApp da HIBRID</h1>
+
+    <p>
+      Esta página é usada para iniciar o Cadastro Incorporado do WhatsApp e autorizar a conexão
+      da conta da HIBRID com a Plataforma do WhatsApp Business.
+    </p>
+
+    <div class="alerta">
+      Use esta página apenas com a conta administradora da HIBRID no Meta Business.
+    </div>
+
+    <button onclick="launchWhatsAppSignup()">
+      Conectar WhatsApp da HIBRID
+    </button>
+
+    <pre id="resultado">Aguardando conexão...</pre>
+  </div>
+
+  <script>
+    window.fbAsyncInit = function () {
+      FB.init({
+        appId: '3788554881285800',
+        cookie: true,
+        xfbml: true,
+        version: 'v25.0'
+      });
+    };
+
+    window.addEventListener('message', function (event) {
+      if (
+        event.origin !== 'https://www.facebook.com' &&
+        event.origin !== 'https://web.facebook.com'
+      ) {
+        return;
+      }
+
+      try {
+        const data = JSON.parse(event.data);
+
+        if (data.type === 'WA_EMBEDDED_SIGNUP') {
+          document.getElementById('resultado').textContent =
+            'DADOS RECEBIDOS DO CADASTRO INCORPORADO:\n\n' +
+            JSON.stringify(data, null, 2);
+
+          console.log('Dados do Embedded Signup:', data);
+        }
+      } catch (error) {
+        console.log('Mensagem recebida:', event.data);
+      }
+    });
+
+    function launchWhatsAppSignup() {
+      document.getElementById('resultado').textContent =
+        'Abrindo cadastro incorporado do WhatsApp...';
+
+      FB.login(function (response) {
+        console.log('Resposta do Facebook Login:', response);
+
+        if (response.authResponse && response.authResponse.code) {
+          document.getElementById('resultado').textContent +=
+            '\n\nCÓDIGO RECEBIDO:\n' + response.authResponse.code;
+        } else {
+          document.getElementById('resultado').textContent +=
+            '\n\nNenhum código foi retornado. Verifique se o fluxo foi concluído corretamente.';
+        }
+      }, {
+        config_id: '1696111961696041',
+        response_type: 'code',
+        override_default_response_type: true,
+        extras: {
+          setup: {},
+          featureType: 'whatsapp_business_app_onboarding',
+          sessionInfoVersion: '3'
+        }
+      });
+    }
+  </script>
+
+  <script async defer crossorigin="anonymous"
+    src="https://connect.facebook.net/pt_BR/sdk.js">
+  </script>
+</body>
+</html>
